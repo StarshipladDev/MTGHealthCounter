@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Magic Life Counter</string>
+    <string name="AddHealth">+ :) </string>
+    <string name="SubtractHealth">- :\'(</string>
+</resources>
