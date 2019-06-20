@@ -5,7 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <ImageView
+        android:layout_width="418dp"
+        android:layout_height="742dp"
+        android:id='@+id/Background'
+        tools:layout_editor_absoluteX="-3dp"
+        tools:layout_editor_absoluteY="-1dp" />
     <TextView
         android:id="@+id/HealthText1"
         android:layout_width="188dp"
@@ -79,5 +84,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.003" />
+
+
 
 </android.support.constraint.ConstraintLayout>
