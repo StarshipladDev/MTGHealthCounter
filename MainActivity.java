@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.media.MediaPlayer;
 
 public class MainActivity extends AppCompatActivity {
     static String TAG="MainActivity";
@@ -25,13 +26,18 @@ public class MainActivity extends AppCompatActivity {
         Button SubtractButton1 = (Button)(findViewById(R.id.SubtractButton1));
         Button AddButton2 = (Button)(findViewById(R.id.AddButton2));
         Button SubtractButton2 = (Button)(findViewById(R.id.SubtractButton2));
-        //Add text veiws of scores and then create listners
+
+        //Creates a media sound effect to play a 'Blood letting' sound on minus health
+        MediaPlayer mp1 = MediaPlayer.create(this, R.raw.splat);
+        MediaPlayer mp2 = MediaPlayer.create(this, R.raw.shine);
+        //Add text veiws of scores and then create listeners
         TextView h1 = (TextView)(findViewById(R.id.HealthText1)) ;
         h1.setTextColor(Color.WHITE);
-        ButtonListener b1 = new ButtonListener(h1);
+        ButtonListener b1 = new ButtonListener(h1,mp1,mp2);
         TextView h2 = (TextView)(findViewById(R.id.HealthText2)) ;
         h2.setTextColor(Color.WHITE);
-        ButtonListener b2 = new ButtonListener(h2);
+        ButtonListener b2 = new ButtonListener(h2,mp1,mp2);
+
         //Attatch button listners
         AddButton1.setOnClickListener(b1);
         SubtractButton1.setOnClickListener(b1);
@@ -42,15 +48,21 @@ public class MainActivity extends AppCompatActivity {
     private class ButtonListener implements View.OnClickListener{
         int number=20;
         TextView t;
-        public ButtonListener(TextView t){
+        MediaPlayer mp1;
+        MediaPlayer mp2;
+        public ButtonListener(TextView t, MediaPlayer mp1, MediaPlayer mp2){
             this.t= t;
+            this.mp1=mp1;
+            this.mp2=mp2;
         }
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.SubtractButton1 || v.getId()==R.id.SubtractButton2) {
                 number--;
+                mp1.start();
             }else{
                 number++;
+                mp2.start();
             }
             t.setText("" + number + "\n");
             Log.i(TAG, "" + number + "\n");
