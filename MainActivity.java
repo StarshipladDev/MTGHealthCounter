@@ -12,6 +12,8 @@ import android.media.MediaPlayer;
 
 public class MainActivity extends AppCompatActivity {
     static String TAG="MainActivity";
+    String player1="Starshiplad";
+    String player2="Starshiplass";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -21,11 +23,15 @@ public class MainActivity extends AppCompatActivity {
         //Draw iamge before others so other draw over it
         ImageView bg = (ImageView)(findViewById(R.id.Background));
         bg.setImageResource(getResources().getIdentifier("@drawable/background",null,this.getPackageName()));
-        //Add buttons
-        Button AddButton1 = (Button)(findViewById(R.id.AddButton1));
-        Button SubtractButton1 = (Button)(findViewById(R.id.SubtractButton1));
-        Button AddButton2 = (Button)(findViewById(R.id.AddButton2));
-        Button SubtractButton2 = (Button)(findViewById(R.id.SubtractButton2));
+        //Add buttons with attatched Images
+        ImageView AddButton1 = (ImageView)(findViewById(R.id.AddButton1));
+        AddButton1.setImageResource(getResources().getIdentifier("@drawable/plus",null,this.getPackageName()));
+        ImageView SubtractButton1 = (ImageView)(findViewById(R.id.SubtractButton1));
+        SubtractButton1.setImageResource(getResources().getIdentifier("@drawable/minus",null,this.getPackageName()));
+        ImageView AddButton2 = (ImageView)(findViewById(R.id.AddButton2));
+        AddButton2.setImageResource(getResources().getIdentifier("@drawable/plus",null,this.getPackageName()));
+        ImageView SubtractButton2 = (ImageView)(findViewById(R.id.SubtractButton2));
+        SubtractButton2.setImageResource(getResources().getIdentifier("@drawable/minus",null,this.getPackageName()));
 
         //Creates a media sound effect to play a 'Blood letting' sound on minus health
         MediaPlayer mp1 = MediaPlayer.create(this, R.raw.splat);
@@ -33,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
         //Add text veiws of scores and then create listeners
         TextView h1 = (TextView)(findViewById(R.id.HealthText1)) ;
         h1.setTextColor(Color.WHITE);
-        ButtonListener b1 = new ButtonListener(h1,mp1,mp2);
+        ButtonListener b1 = new ButtonListener(h1,player1,mp1,mp2);
         TextView h2 = (TextView)(findViewById(R.id.HealthText2)) ;
         h2.setTextColor(Color.WHITE);
-        ButtonListener b2 = new ButtonListener(h2,mp1,mp2);
+        ButtonListener b2 = new ButtonListener(h2,player2,mp1,mp2);
 
         //Attatch button listners
         AddButton1.setOnClickListener(b1);
@@ -50,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         TextView t;
         MediaPlayer mp1;
         MediaPlayer mp2;
-        public ButtonListener(TextView t, MediaPlayer mp1, MediaPlayer mp2){
+        String player;
+        public ButtonListener(TextView t,String player, MediaPlayer mp1, MediaPlayer mp2){
             this.t= t;
+            this.player=player;
             this.mp1=mp1;
             this.mp2=mp2;
         }
@@ -64,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 number++;
                 mp2.start();
             }
-            t.setText("" + number + "\n");
+            t.setText(player+"'s Health: "+ number + "\n");
             Log.i(TAG, "" + number + "\n");
         }
     }
