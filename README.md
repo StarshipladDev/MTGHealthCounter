@@ -2,7 +2,7 @@
 This app is designed to provide a simple and friendly 2-player life counting app for games of Magic The Gathering.
 The rulesfor MTG can be found at https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/rules
 
-#Skills To Develop
+# Skills To Develop
 This project is a designed to build on 3 key skills.
 
 My ability to work with android studio, and further build on my Java/XML skills
@@ -12,7 +12,7 @@ My ability to document my work and git releases/ maintain a development schedule
 My skills in pixel art and user interfaces
 
 # Features
-** Current Features **:
+**Current Features**:
 
 Disabled auto-power off
 
@@ -22,7 +22,7 @@ Coin object in centre of screen allows computor to detirmine start player
 
 Players can add/subtract their owen health as game paly progresses
 
-** Planned Features **:
+**Planned Features**:
 
 Ability to add/remove various counters to represent token creatures/ +1/+1 counters
 
@@ -30,10 +30,10 @@ Ability to quickly reset points
 
 Implementation of multiplayer games
 
-Implementation of Players being allowed to edit names
+Implementation of players being allowed to edit names
 
 # Latest Upload
-8/10/2019 - Unstable Counter implementation
+8/10/2019 - Unstable Counter Implementation
 
 # Next build
 Week ending 13/10/2019 - 
@@ -56,10 +56,10 @@ There are currently plans to import this application into the Google Play app st
 
 **Resources**
 
-* colors/strings/styles * - * source *\app\src\main\res\values
-* icon * - *source*\app\src\main\res\relevantmipmap * resize as necessary *
-* Shine.wav and splat.wav * -*source*\app\src\main\res\raw
-* Background.png * -* source *\app\src\main\res\drawable
+* *colors/strings/styles* - * source *\app\src\main\res\values
+* *icon* - *source*\app\src\main\res\relevantmipmap * resize as necessary *
+* *Shine.wav and splat.wav* -*source*\app\src\main\res\raw
+* *Background.png* - *source* \app\src\main\res\drawable
 
 
 
