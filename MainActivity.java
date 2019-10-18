@@ -1,8 +1,11 @@
 package com.example.healtcount;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.media.Image;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     String player2="Starshiplass";
     static int Health1=20;
     static int Health2=20;
+    static int[] counterTypes1 = new int[]{0,0,0,0};
+    static int[] counterTypes2 = new int[]{0,0,0,0};
+    static ImageView[] counters = new ImageView[8];
+    static int counterMargin=40;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -56,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
         SubtractButton2.setImageResource(getResources().getIdentifier("@drawable/minus",null,this.getPackageName()));
         ImageView coinToss= (ImageView)(findViewById(R.id.CoinToss));
         coinToss.setImageResource(getResources().getIdentifier("@drawable/coinhead",null,this.getPackageName()));
-        Button addCounter1 = (Button)(findViewById(R.id.addCounter1));
-        Button addCounter2 = (Button)(findViewById(R.id.addCounter2));
+        ImageView addCounter1 = (ImageView)(findViewById(R.id.addCounter1));
+        ImageView addCounter2 = (ImageView)(findViewById(R.id.addCounter2));
+        addCounter1.setImageResource(R.drawable.counterbutton);
+        addCounter2.setImageResource(R.drawable.counterbutton);
         //Creates a media sound effect to play a 'Blood letting' sound on minus health
         MediaPlayer mp1 = MediaPlayer.create(this, R.raw.splat);
         MediaPlayer mp2 = MediaPlayer.create(this, R.raw.shine);
@@ -159,38 +168,126 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private class CounterListner implements View.OnClickListener {
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.addCounter1){
-                Log.i(TAG,"Counter1");
-            }
-            else if(v.getId()==R.id.addCounter2){
-                ImageView counter = new ImageView(MainActivity.this);
-                counter.setImageResource(R.drawable.counter1);
-                ConstraintLayout relativeLayout = (ConstraintLayout) findViewById(R.id.overall);
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                layoutParams.addRule(RelativeLayout.ABOVE, R.id.addCounter2);
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                relativeLayout.addView(counter, layoutParams);
-                counter.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this,counter){
-                    public void onSwipeTop() {
-                        this.iv.setImageResource(R.drawable.counter2);
-                    }
-                    public void onSwipeRight() {
-                        Log.i(TAG,"right");
-                    }
-                    public void onSwipeLeft() {
-                        Log.i(TAG,"left");
-                    }
-                    public void onSwipeBottom() {
-                        this.iv.setImageResource(R.drawable.counter3);
-                    }
+                int i=0;
+                while(i<counterTypes1.length){
+                    Log.i(TAG,"i="+i+", counters[i] is "+counterTypes1[i]);
+                    if(counterTypes1[i]==0){
 
-                });
+                        break;
+                    }
+                    i++;
+                }
+                if (i==counterTypes1.length){
+                    Log.i(TAG,"Counters full");
+                }else{
+                    counterTypes1[i]=1;
+                    counters[i]= new ImageView(MainActivity.this);
+                    counters[i].setImageResource(R.drawable.counter1);
+                    counters[i].setId(ViewCompat.generateViewId());
+                    ConstraintLayout relativeLayout = (ConstraintLayout) findViewById(R.id.overall);
+                    ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    counters[i].setLayoutParams(layoutParams);
+                    relativeLayout.addView(counters[i]);
+                    ConstraintSet constraintSet = new ConstraintSet();
+                    constraintSet.clone(relativeLayout);
+                    constraintSet.connect(counters[i].getId(), ConstraintSet.BOTTOM, relativeLayout.getId(), ConstraintSet.BOTTOM, 20);
+                    constraintSet.connect(counters[i].getId(), ConstraintSet.RIGHT, relativeLayout.getId(), ConstraintSet.RIGHT, (100*i)+counterMargin);
+                    constraintSet.applyTo(relativeLayout);
+                    counters[i].setOnTouchListener(new OnSwipeTouchListener(MainActivity.this,i,relativeLayout){
+                        public void onSwipeRight() {
+                            Log.i(TAG,"Right called on "+this.iv);
+                            Log.i(TAG,"countersType2[iv-4] is "+(counterTypes1[this.iv]));
+                            if (counterTypes1[this.iv]==1){
+                                counterTypes1[this.iv]=2;
+                                counters[this.iv].setImageResource(R.drawable.counter2);
+                            }else if(counterTypes1[this.iv]==2){
+                                counterTypes1[this.iv]=3;
+                                counters[this.iv].setImageResource(R.drawable.counter3);
+                            }
+                        }
+                        public void onSwipeLeft() {
+                            Log.i(TAG,"Left called on "+this.iv);
+                            Log.i(TAG,"countersType2[iv-4] is "+(counterTypes1[this.iv]));
+                            if (counterTypes1[this.iv]==2){
+                                counterTypes1[this.iv]=1;
+                                counters[this.iv].setImageResource(R.drawable.counter1);
+                            }else if(counterTypes1[this.iv]==3){
+                                counterTypes1[this.iv]=2;
+                                counters[this.iv].setImageResource(R.drawable.counter2);
+                            }
+                            else if(counterTypes1[this.iv]==1){
+                                counterTypes1[this.iv]=0;
+                                counters[this.iv].setVisibility(View.INVISIBLE);
+                                this.cl.removeView(counters[this.iv]);
+                            }
+                        }
+
+                    });
+                }
+            }
+            //If player 2 (Upside down) create counter
+            else if(v.getId()==R.id.addCounter2){
+                int i=0;
+                while(i<counterTypes2.length){
+                    Log.i(TAG,"i="+i+", counters[i] is "+counterTypes2[i]);
+                    if(counterTypes2[i]==0){
+
+                        break;
+                    }
+                    i++;
+                }
+                if (i==counterTypes2.length){
+                    Log.i(TAG,"Counters full");
+                }else{
+                    counterTypes2[i]=1;
+                    counters[i+4]= new ImageView(MainActivity.this);
+                    counters[i+4].setImageResource(R.drawable.counter1);
+                    counters[i+4].setId(ViewCompat.generateViewId());
+                    ConstraintLayout relativeLayout = (ConstraintLayout) findViewById(R.id.overall);
+                    ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    counters[i+4].setLayoutParams(layoutParams);
+                    relativeLayout.addView(counters[i+4]);
+                    ConstraintSet constraintSet = new ConstraintSet();
+                    constraintSet.clone(relativeLayout);
+                    constraintSet.connect(counters[i+4].getId(), ConstraintSet.TOP, relativeLayout.getId(), ConstraintSet.TOP, 20);
+                    constraintSet.connect(counters[i+4].getId(), ConstraintSet.LEFT, relativeLayout.getId(), ConstraintSet.LEFT, (100*i)+counterMargin);
+                    constraintSet.applyTo(relativeLayout);
+                    counters[i+4].setOnTouchListener(new OnSwipeTouchListener(MainActivity.this,i+4,relativeLayout){
+                        public void onSwipeRight() {
+                            Log.i(TAG,"Right called on "+this.iv);
+                            Log.i(TAG,"countersType2[iv-4] is "+(counterTypes2[this.iv-4]));
+                            if (counterTypes2[this.iv-4]==1){
+                                counterTypes2[this.iv-4]=2;
+                                counters[this.iv].setImageResource(R.drawable.counter2);
+                            }else if(counterTypes2[this.iv-4]==2){
+                                counterTypes2[this.iv-4]=3;
+                                counters[this.iv].setImageResource(R.drawable.counter3);
+                            }
+                        }
+                        public void onSwipeLeft() {
+                            Log.i(TAG,"Left called on "+this.iv);
+                            Log.i(TAG,"countersType2[iv-4] is "+(counterTypes2[this.iv-4]));
+                            if (counterTypes2[this.iv-4]==2){
+                                counterTypes2[this.iv-4]=1;
+                                counters[this.iv].setImageResource(R.drawable.counter1);
+                            }else if(counterTypes2[this.iv-4]==3){
+                                counterTypes2[this.iv-4]=2;
+                                counters[this.iv].setImageResource(R.drawable.counter2);
+                            }
+                            else if(counterTypes2[this.iv-4]==1){
+                                counterTypes2[this.iv-4]=0;
+                                counters[this.iv].setVisibility(View.INVISIBLE);
+                                this.cl.removeView(counters[this.iv+4]);
+                            }
+                        }
+
+                    });
+                }
+
             }
 
         }
@@ -293,12 +390,14 @@ public class MainActivity extends AppCompatActivity {
     }
     //Taken from https://stackoverflow.com/questions/4139288/android-how-to-handle-right-to-left-swipe-gestures
     private class OnSwipeTouchListener implements OnTouchListener {
-        public ImageView iv=null;
+        public int iv=-1;
+        public ConstraintLayout cl=null;
         private final GestureDetector gestureDetector;
 
-        public OnSwipeTouchListener (Context ctx,ImageView iv){
+        public OnSwipeTouchListener (Context ctx,int i,ConstraintLayout cl){
             gestureDetector = new GestureDetector(ctx, new GestureListener());
-            this.iv=iv;
+            this.iv=i;
+            this.cl=cl;
         }
 
         @Override
