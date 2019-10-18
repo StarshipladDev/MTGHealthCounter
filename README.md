@@ -16,15 +16,15 @@ My skills in pixel art and user interfaces
 
 Disabled auto-power off
 
-2 palyers have UI's facing each of them
+2 players have UI's facing each of them
 
-Coin object in centre of screen allows computor to detirmine start player
+Coin object in centre of screen allows computer to determine starting player
 
-Players can add/subtract their owen health as game paly progresses
-
-**Planned Features**:
+Players can add/subtract their own health as gameplay progresses
 
 Ability to add/remove various counters to represent token creatures/ +1/+1 counters
+
+**Planned Features**:
 
 Ability to quickly reset points
 
@@ -33,33 +33,33 @@ Implementation of multiplayer games
 Implementation of players being allowed to edit names
 
 # Latest Upload
-8/10/2019 - Unstable Counter Implementation
+18/10/2019 -
+APK release, coutner correction, merger with master
 
 # Next build
-Week ending 13/10/2019 - 
+Week ending 24/11/2019 - 
 
->Implement each player being able to add up to 4 counters, that can be swiped to change counter type
+I am taking a hiatus to finish up exams.
+>Final bug tests
 
->Add correct documentation similar to Five Move Murder Fest (https://github.com/StarshipladDev/FiveMoveMurder)
+>Add menu/help button
 
->Release as unstable build in Full-screen branch
+>Add option for multiplayer(4) mode
 
->Bug fix for master merge and APK release week after
+>Added sounds
+
+>Implementation of players being allowed to edit names
+
+>Release after- full release onto play store.
 
 # Most Recent Stable Build:
-Hold button health - Added full-screen support and holding buttons to increment by 5 HP
+Counters - Added APK release and coutner implementation
 
 # Installing and Compiling:
-There are currently plans to import this application into the Google Play app store, however, if you have a computer running  android studio, the following video explains how to load and run a program.(The app can be run remotely after) 	https://www.youtube.com/watch?v=y3nwpowsMWs
 
-# File location creations required:
-
-**Resources**
-
-* *colors/strings/styles* - * source *\app\src\main\res\values
-* *icon* - *source*\app\src\main\res\relevantmipmap * resize as necessary *
-* *Shine.wav and splat.wav* -*source*\app\src\main\res\raw
-* *Background.png* - *source* \app\src\main\res\drawable
-
+To install MTGLifeCounter, go to www.Starshiplad.com/MTGApp.apk .
+This will download the MTG life coutner app apk file. You need to let your system run apps from exernal sources (I reccommend turning this back on after installing)
+to fully download. Once you run the installer, it should work fine!
+Requires jellybean android OS and above.
 
 
