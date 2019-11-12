@@ -1,6 +1,7 @@
 package com.example.healtcount;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.media.Image;
 import android.support.constraint.ConstraintLayout;
@@ -37,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
     static int[] counterTypes1 = new int[]{0,0,0,0};
     static int[] counterTypes2 = new int[]{0,0,0,0};
     static ImageView[] counters = new ImageView[8];
-    static int counterMargin=40;
+    static int counterMargin=50;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.i(TAG," Yay the program is working!");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
